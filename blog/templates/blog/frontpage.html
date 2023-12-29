@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+
+{% for post in posts %}
+<div class="post block">
+  <h2 class="subtitle">{{post.title}}</h2>
+  <small>{{post.posted_at}}</small>
+  <p>{{post.intro}}</p>
+  <a href="{% url 'post_detail' post.slug %}">
+    <button class="button is-primary">続きを読む</button>
+  </a>
+  <hr>
+  <div class="content">
+    {{post.content|safe}}
+  </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

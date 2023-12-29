@@ -1,0 +1,13 @@
+
+
+
+
+<form enctype="multipart/form-data" action="{% url 'server_information_create' %}" method="post" novalidate>
+  {% csrf_token %}
+  {{form.as_p}}
+  <div class="field">
+    <button class="is-danger button">
+      新規サーバー情報を登録
+    </button>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+指定したサーバー情報詳細を表示
+
+<div id="server">
+  <p>{{ server_information.server_name }}</p>
+  <p>{{ server_information.server_address }}</p>
+  <p>{{ server_information.server_port }}</p>
+  <p>{{ server_information.server_password}}</p>
+  <p>{{ server_information.server_key}}</p>
+  <p>
+    <a href="{% url 'server_information_download_server_key' server_information.id %}">
+      秘密鍵のダウンロード
+    </a>
+  </p>
+  <p>{{ server_information.server_key_password}}</p>
+  <p>{{ server_information.comment }}</p>
+</div>
+
+<a href="{% url 'server_information_update' server_information.id %}">
+  このサーバー情報を編集する
+</a>

@@ -1,0 +1,17 @@
+
+{% for server in server_informations %}
+<div>
+  <a href="{% url 'server_information_detail' server.id %}">
+    詳細へ
+  </a>
+  <p>{{server.server_name}}</p>
+  <p>{{server.server_address}}</p>
+  <p>{{server.server_port}}</p>
+  <p>{{server.server_user}}</p>
+  <p>{{server.server_password}}</p>
+  <p>{{server.server_comment}}</p>
+  <p>{{server.server_created_at}}</p>
+  <p>{{server.server_updated_at}}</p>
+</div>
+
+{% endfor %}

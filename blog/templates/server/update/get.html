@@ -1,0 +1,11 @@
+サーバー情報の更新
+
+
+<form action="{% url 'server_information_update' server_information.id %}" method="post" novalidate>
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <button >
+    上記の内容で編集する
+  </button>
+</form>
