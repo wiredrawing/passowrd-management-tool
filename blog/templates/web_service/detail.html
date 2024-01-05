@@ -1,0 +1,33 @@
+★作成したwebサービスログイン情報を表示
+
+
+<p>
+  1.webサービス名<br>
+  {{ web_service.service_name }}
+</p>
+
+<p>
+  2.webサービスURL<br>
+  <a href="{{ web_service.login_url}}">
+    {{ web_service.login_url }}
+  </a>
+</p>
+
+<p>
+  3.webサービスユーザー名<br>
+  {{ web_service.login_id }}
+</p>
+
+<p>
+  4.webサービスパスワード<br>
+  {{ web_service.login_password }}
+</p>
+
+<p>
+  5.webサービスコメント<br>
+  {{ web_service.comment }}
+</p>
+
+<a href="{% url 'web_service_update' web_service.id %}">
+  このwebサービス情報を編集する
+</a>

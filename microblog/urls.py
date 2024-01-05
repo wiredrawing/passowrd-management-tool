@@ -20,5 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # アプリケーションごとにルーティングを分ける
+    # FTPあるいはSSHサーバー用ルーティング
     path('server_information/', include("blog.urls")),
+    # webサービス用ルーティング
+    path('web_service/', include("blog.web_service_urls")),
 ]

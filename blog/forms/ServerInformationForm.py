@@ -4,6 +4,13 @@ from ..models import ServerInformation
 
 class ServerInformationForm(forms.ModelForm):
 
+    def clean_server_password_confirm(self):
+        server_password = self.cleaned_data.get("server_password")
+        server_password_confirm = self.cleaned_data.get("server_password_confirm")
+        if server_password != server_password_confirm:
+            raise forms.ValidationError("サーバーのパスワードが一致しません")
+        return server_password_confirm
+
     def clean_server_port(self):
         server_port = self.cleaned_data.get("server_port")
         if server_port == 22:
@@ -15,6 +22,25 @@ class ServerInformationForm(forms.ModelForm):
         if server_name == "NG":
             raise forms.ValidationError("NG word is not allowed")
         return server_name
+
+    def clean_server_key_password(self):
+        server_key_password = self.cleaned_data.get("server_key_password");
+        server_key = self.cleaned_data.get("server_key")
+        # print("server_key_password ======>", server_key_password)
+        # print("server_key ======>", server_key)
+        if server_key_password and not server_key:
+            raise forms.ValidationError("秘密鍵のパスフレーズを入力する場合は、秘密鍵をアップロードしてください")
+        return server_key_password
+
+    def clean_server_key(self):
+        # print("self.cleaned_data.get('server_key') ======>", self.cleaned_data)
+        server_key = self.cleaned_data.get("server_key")
+        # print("FILE ======>", server_key)
+        server_key_password = self.cleaned_data.get("server_key_password")
+        # print("server_key_password ======>", server_key_password)
+        if server_key_password and not server_key:
+            raise forms.ValidationError("秘密鍵のパスフレーズを入力する場合は、秘密鍵をアップロードしてください")
+        return server_key
 
     def clean_server_key_password_confirm(self):
         server_key_password = self.cleaned_data.get("server_key_password")
@@ -35,7 +61,6 @@ class ServerInformationForm(forms.ModelForm):
 
         return cleaned_data
 
-
     """サーバーのパスフレーズの確認用フォームを追加
     ※参考URL
     https://medium.com/@kjmczk/django-custom-validators-529d3d6cba82
@@ -51,6 +76,12 @@ class ServerInformationForm(forms.ModelForm):
         # widgetsはInputクラスのオブエジェクト
         widget=forms.TextInput(),
         required=False,
+    )
+
+    server_key = forms.FileField(
+        label="サーバーのSSHキーorFTPの秘密鍵",
+        required=False,
+        widget=forms.FileInput(),
     )
 
     class Meta(object):
@@ -71,7 +102,7 @@ class ServerInformationForm(forms.ModelForm):
         widgets = {
             # widgetsオブジェクト ～Input()系のオブジェクトを渡す
             "server_port": forms.TextInput(),
-            "server_key": forms.FileInput(),
+            # "server_key": forms.FileInput(),
         }
 
         error_messages = {

@@ -1,0 +1,10 @@
+
+
+
+<form action="{% url 'web_service_update' web_service.id %}" method="post" novalidate>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button >
+    上記の内容で編集する
+  </button>
+</form>

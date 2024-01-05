@@ -6,7 +6,20 @@ from blog.validators.server_name_validator import server_name_validator
 
 
 # Create your models here.
+"""
+テーブルのマイグレーションをロールバックする
 
+python manage.py migrate <application name> zero
+例)python manage.py migrate blog zero
+
+テーブルのマイグレーションファイルを作成する
+python manage.py makemigrations <application name>
+例)python manage.py makemigrations blog
+
+テーブルのマイグレーションを実行する
+python manage.py migrate <application name>
+例)python manage.py migrate blog
+"""
 
 class User(models.Model):
     # テーブル名を任意の名前で変更したい場合
@@ -119,3 +132,52 @@ class Comment(models.Model):
     email = models.EmailField()
     body = models.TextField()
     posted_at = models.DateTimeField(auto_now_add=True)
+
+
+class WebService(models.Model):
+
+    class Meta (object):
+        db_table = "web_services"
+
+    """
+    Webサービスのモデルクラス
+    利用中のウェブサービスのアカウントを管理する
+    """
+
+    # サービス名(社内も含めて)
+    service_name = models.CharField(
+        max_length=255,
+        verbose_name="サービス名",
+        null=False,
+        blank=False,
+    )
+    # サービスへログインするためのURL
+    login_url = models.URLField(
+        verbose_name="ログインURL",
+        null=False,
+        blank=False,
+    )
+    # サービスへログインするためのURL
+    login_id = models.CharField(
+        max_length=255,
+        verbose_name="ログインID",
+        null=False,
+        blank=False,
+    )
+    # サービスへログインするためのパスワード
+    login_password = models.CharField(
+        max_length=255,
+        verbose_name="ログインパスワード",
+        null=False,
+        blank=False,
+    )
+
+    # memo
+    comment = models.TextField(
+        verbose_name="メモ",
+        null=True,
+        blank=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)

@@ -1,0 +1,15 @@
+
+
+
+
+
+
+<form action="{% url 'web_service_create' %}" method="post" novalidate>
+  {% csrf_token %}
+  {{form.as_p}}
+  <div class="field">
+    <button class="is-danger button">
+      新規Webサービス情報を登録
+    </button>
+  </div>
+</form>

@@ -8,6 +8,7 @@ from blog.forms.ServerInformationForm import ServerInformationForm
 from django.shortcuts import redirect
 from blog.models import ServerInformation
 from django.forms.models import model_to_dict
+from django.http import QueryDict
 
 
 class ServerInformationView(View):
@@ -67,8 +68,7 @@ class ServerInformationCreateView(View):
         })
 
     def post(self, request):
-        print(request.POST)
-        form = ServerInformationForm(request.POST)
+        form = ServerInformationForm(data=request.POST, files=request.FILES)
 
         if form.is_valid():
             # 先にアップロードされたファイルを処理する
@@ -86,7 +86,6 @@ class ServerInformationCreateView(View):
             server_information.server_key_name = uploaded_file.name
             server_information.save()
             print(type(server_information))
-
 
             return redirect("server_information_detail", server_information_id=server_information.id)
         else:
@@ -141,29 +140,34 @@ class ServerInformationUpdateView(View):
 
 class ServerInformationDownloadServerKeyView(View):
 
-    def get (self, request, server_information_id: str):
+    def get(self, request, server_information_id: str):
         server_information = ServerInformation.objects.get(pk=server_information_id)
-
         # content_type="application/octet-stream"でダウンロードさせる
-        return FileResponse(
+        file_response = FileResponse(
             server_information.server_key,
             as_attachment=True,
             filename=server_information.server_key_name,
             content_type="application/octet-stream",
         )
+        # 以下を記述しないと、ダウンロード時のファイル名が文字化けする
+        file_response.set_headers({
+            "Content-Disposition": "attachment; filename={}".format(server_information.server_key_name),
+        })
+        return file_response
 
-
-    def post (self, request, server_information_id: str):
+    def post(self, request, server_information_id: str):
         return ""
 
 
-
-def handle_uploaded_file(f)->bytes:
+def handle_uploaded_file(f) -> bytes:
     """
     アップロードされた秘密鍵ファイルの中身を取得して
     そのままDBのレコードに登録する
     """
     secret_key_binary = []
+
+    print("FFFFFFFFFFFFFFFFFFFFFF => ", f)
+
     for chunk in f.chunks():
         secret_key_binary.append(chunk)
     return b"".join(secret_key_binary)
