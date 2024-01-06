@@ -10,6 +10,12 @@ class WebServiceView(View):
     # 現在登録中のwebサービス一覧を返却する
     def get(self, request):
         web_services = WebService.objects.all()
+
+        for web_service in web_services:
+            print("web_service ======>", web_service)
+            print("web_service.service_name ======>", web_service.service_name)
+
+
         return render(request, "web_service/index.html", {
             "web_services": web_services,
         })

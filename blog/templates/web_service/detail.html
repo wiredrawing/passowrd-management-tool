@@ -1,5 +1,4 @@
-★作成したwebサービスログイン情報を表示
-
+<h1>{{ web_service.service_name }}</h1>
 
 <p>
   1.webサービス名<br>
@@ -8,7 +7,7 @@
 
 <p>
   2.webサービスURL<br>
-  <a href="{{ web_service.login_url}}">
+  <a target="_blank" href="{{ web_service.login_url}}">
     {{ web_service.login_url }}
   </a>
 </p>
@@ -25,7 +24,7 @@
 
 <p>
   5.webサービスコメント<br>
-  {{ web_service.comment }}
+  {{ web_service.comment | linebreaksbr }}
 </p>
 
 <a href="{% url 'web_service_update' web_service.id %}">

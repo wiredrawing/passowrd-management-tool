@@ -1,0 +1,12 @@
+{% for web_service in web_services %}
+<div>
+  <p>
+    <a href="{% url 'web_service_detail' web_service.id %}">
+      ({{web_service.id }}) {{ web_service.service_name }}
+    </a>
+  </p>
+  <p>初回登録時: {{ web_service.created_at }}</p>
+  <p>最終更新時: {{ web_service.updated_at }}</p>
+</div>
+<hr>
+{% endfor %}
