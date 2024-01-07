@@ -39,7 +39,6 @@ class WebServiceCreateView(View):
     """
 
     def get(self, request):
-        print("新規webサービス情報登録フォーム")
         form = WebServiceForm()
         return render(request, "web_service/create.html", {
             "form": form

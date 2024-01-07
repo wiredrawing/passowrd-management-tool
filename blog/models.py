@@ -150,6 +150,8 @@ class WebService(models.Model):
         verbose_name="サービス名",
         null=False,
         blank=False,
+        unique=True,
+        error_messages={"unique": "<カスタムメッセージ>:既に登録されているサービス名です"},
     )
     # サービスへログインするためのURL
     login_url = models.URLField(

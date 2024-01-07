@@ -27,6 +27,14 @@
   {{ web_service.comment | linebreaksbr }}
 </p>
 
-<a href="{% url 'web_service_update' web_service.id %}">
-  このwebサービス情報を編集する
-</a>
+<p>
+  <a href="{% url 'web_service_update' web_service.id %}">
+    このwebサービス情報を編集する
+  </a>
+</p>
+
+<p>
+  <a href="{% url 'web_service' %}">
+    一覧に戻る
+  </a>
+</p>
