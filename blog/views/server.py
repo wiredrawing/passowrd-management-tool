@@ -21,6 +21,7 @@ class ServerInformationView(View):
         for server in server_informations:
             print(server.id)
             print(server.server_name)
+            print(server.connection_type_name)
         return render(request, "server/index.html", {
             "server_informations": server_informations,
         })
@@ -142,17 +143,32 @@ class ServerInformationDownloadServerKeyView(View):
 
     def get(self, request, server_information_id: str):
         server_information = ServerInformation.objects.get(pk=server_information_id)
+        b = bytearray("binarydata".encode("utf-8"))
+        memory_data = memoryview(b)
+        # print(dir(memory_data))
+        # print(memory_data.tobytes())
+        # print(memory_data.readonly)
+        # print(server_information.server_key.readonly)
+        # print(server_information.server_key.tobytes())
         # content_type="application/octet-stream"でダウンロードさせる
         file_response = FileResponse(
+            # memory_data,
             server_information.server_key,
-            as_attachment=True,
+            as_attachment=False,
             filename=server_information.server_key_name,
             content_type="application/octet-stream",
         )
+        # print(file_response)
+        # print(vars(file_response))
+        # print(file_response._no_explicit_content_type)
+        # print(type(server_information.server_key))
+        # print(server_information.server_key)
         # 以下を記述しないと、ダウンロード時のファイル名が文字化けする
         file_response.set_headers({
+            "Content-Type": "text/plain; charset=UTF-8",
             "Content-Disposition": "attachment; filename={}".format(server_information.server_key_name),
         })
+        # print(type(server_information.server_key) == type(memory_data))
         return file_response
 
     def post(self, request, server_information_id: str):

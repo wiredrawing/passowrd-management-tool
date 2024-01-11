@@ -41,6 +41,18 @@ class ServerInformation(models.Model):
     class Meta():
         db_table = "server_informations"
 
+    @property
+    def connection_type_name(self):
+        from blog.application_config import connection_type_choices
+        for connection_type in connection_type_choices:
+            if connection_type[0] == self.connection_type:
+                return connection_type[1]
+        return "不正な値が設定されました"
+
+    # def __getattr__(self, item):
+    #     print("item ======>", item)
+
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     server_name = models.CharField(
         validators=[
@@ -105,6 +117,13 @@ class ServerInformation(models.Model):
         db_comment="サーバーのコメント(任意)", null=True, blank=True, db_column="comment",
         verbose_name="サーバーのコメント(任意)",
     )
+    # 接続タイプ  ssh or sftp or ftp or ftps など
+    connection_type = models.CharField(
+        blank=False,
+        null=False,
+        max_length=255,
+        db_comment="接続タイプ ssh or sftp or ftp or ftps など",
+    );
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)

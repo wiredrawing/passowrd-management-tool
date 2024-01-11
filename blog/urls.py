@@ -7,6 +7,7 @@ from blog.views.server import (
     ServerInformationUpdateView,
     ServerInformationDownloadServerKeyView,
 )
+from blog.views.ServerInformationListDownloadView import ServerInformationListDownloadView
 
 # server_information独自のルーティング
 urlpatterns = [
@@ -33,4 +34,5 @@ urlpatterns = [
         ServerInformationUpdateView.as_view(),
         name="server_information_update"
     ),
+    path("download/", ServerInformationListDownloadView.as_view(), name="server_information_list_download"),
 ]

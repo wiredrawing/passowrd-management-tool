@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
 urlpatterns = [
+    path("", include("blog.top_urls")),
     path('admin/', admin.site.urls),
     # アプリケーションごとにルーティングを分ける
     # FTPあるいはSSHサーバー用ルーティング

@@ -1,0 +1,32 @@
+<h1>Topページ</h1>
+
+
+<h3>WebServer接続情報</h3>
+<p>
+  <a href="{% url 'server_information' %}">
+    WebServer接続情報一覧
+  </a>
+</p>
+<p>
+  <a href="{% url 'server_information_create' %}">
+    WebServer接続情報の新規登録
+  </a>
+</p>
+
+<p>
+  <a href="{% url 'server_information_list_download' %}">
+    WebServer接続情報のダウンロード
+  </a>
+</p>
+<h3>WebServiceログイン情報</h3>
+<p>
+  <a href="{% url 'web_service' %}">
+    WebServiceログイン情報一覧
+  </a>
+</p>
+
+<p>
+  <a href="{% url 'web_service_create' %}">
+    WebServiceログイン情報の新規登録
+  </a>
+</p>

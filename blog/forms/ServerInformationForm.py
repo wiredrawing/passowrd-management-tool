@@ -1,5 +1,6 @@
 from django import forms
 from ..models import ServerInformation
+from blog.application_config import connection_type_choices
 
 
 class ServerInformationForm(forms.ModelForm):
@@ -84,6 +85,12 @@ class ServerInformationForm(forms.ModelForm):
         widget=forms.FileInput(),
     )
 
+    # 接続タイプをプルダウンメニューでフォームに表示
+    connection_type = forms.ChoiceField(
+        label="接続タイプ",
+        choices=connection_type_choices,
+        required=False,
+    )
     class Meta(object):
         model = ServerInformation
         fields = [
@@ -97,6 +104,7 @@ class ServerInformationForm(forms.ModelForm):
             "server_key",
             "server_key_password",
             "server_key_password_confirm",
+            "connection_type",
             "comment",
         ]
         widgets = {
